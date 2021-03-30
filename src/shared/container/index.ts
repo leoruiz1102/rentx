@@ -9,15 +9,15 @@ import { ISpecificationsRepository } from "../../modules/cars/repositories/ISpec
 
 container.registerSingleton<ICategoriesRepository>(
   "CategoriesRepository",
-  CategoriesRepository
+  CategoriesRepository,
 );
 
 container.registerSingleton<ISpecificationsRepository>(
   "SpecificationsRepository",
-  SpecificationsRepository
+  SpecificationsRepository,
 );
 
 container.registerSingleton<IUsersRepository>(
   "UsersRepository",
-  UsersRepository
+  UsersRepository,
 );

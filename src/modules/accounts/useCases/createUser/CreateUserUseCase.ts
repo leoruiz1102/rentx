@@ -1,11 +1,12 @@
+import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../shared/errors/AppError";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IResponse {
   name: string;
   email: string;
-  username: string;
   password: string;
   driver_license: string;
 }
@@ -14,21 +15,25 @@ interface IResponse {
 class CreateUserUseCase {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
   ) { } // eslint-disable-line
 
   async execute({
     name,
     email,
-    username,
     password,
     driver_license,
   }: IResponse): Promise<void> {
+    const userAlreadyExists = await this.usersRepository.findByEmail(email);
+
+    if (userAlreadyExists) throw new AppError("User already exists!");
+
+    const hashPassword = await hash(password, 8);
+
     await this.usersRepository.create({
       name,
       email,
-      username,
-      password,
+      password: hashPassword,
       driver_license,
     });
   }
