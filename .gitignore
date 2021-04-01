@@ -1,3 +1,5 @@
+#App
+.env
 /node_modules
 
 #Docker
@@ -5,3 +7,5 @@
 
 #TypeOrm
 /ormconfig.json
+
+/tmp

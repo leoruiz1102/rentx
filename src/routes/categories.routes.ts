@@ -22,7 +22,7 @@ categoriesRoutes.get("/", listCategoriesController.handle);
 categoriesRoutes.post(
   "/import",
   upload.single("file"),
-  importCategoryController.handle
+  importCategoryController.handle,
 );
 
 export { categoriesRoutes };

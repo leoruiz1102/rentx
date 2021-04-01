@@ -1,5 +1,5 @@
-import { NextFunction, Request } from "express";
-import { verify } from "jsonwebtoken";
+import { NextFunction, Request, Response } from "express";
+import { sign, verify } from "jsonwebtoken";
 
 import { UsersRepository } from "../../modules/accounts/repositories/implementations/UsersRepository";
 import { AppError } from "../errors/AppError";
@@ -14,15 +14,14 @@ export async function enshureAuthneticated(
   next: NextFunction,
 ) {
   const authHeader = req.headers.authorization;
-
   if (!authHeader) throw new AppError("Token missing", 401);
-
+  // Bearer token
   const [, token] = authHeader.split(" ");
 
   try {
     const { sub: user_id } = verify(
       token,
-      "5aaa1ce426e969f50fe0c5d4a81cecb3",
+      process.env.APP_JWT_HASH,
     ) as IPayload;
 
     const usersRepository = new UsersRepository();
@@ -30,6 +29,12 @@ export async function enshureAuthneticated(
     const user = await usersRepository.findById(user_id);
 
     if (!user) throw new AppError("User does not exists!", 401);
+
+    req.user = {
+      id: user_id,
+      isAdmin: user.isAdmin,
+      name: user.name,
+    };
 
     next();
   } catch {

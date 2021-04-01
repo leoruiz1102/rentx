@@ -1,12 +1,17 @@
 import { Router } from "express";
 
 import { CreateSpecificationController } from "../modules/cars/useCases/createSpecification/CreateSpecificationController";
+import { enshureAuthneticated } from "../shared/middlewares/enshureAuthenticated";
 
 const specificationsRoutes = Router();
 
 const createSpecificationController = new CreateSpecificationController();
 
-specificationsRoutes.post("/", createSpecificationController.handle);
+specificationsRoutes.post(
+  "/",
+  enshureAuthneticated,
+  createSpecificationController.handle,
+);
 
 // specificationsRoutes.get("/", (req, res) => {
 //   const specifications = specificationsRepository.list();

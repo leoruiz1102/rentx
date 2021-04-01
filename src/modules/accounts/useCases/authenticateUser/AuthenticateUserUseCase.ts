@@ -34,7 +34,7 @@ class AuthenticateUserUseCase {
 
     if (!passwordMatch) throw new AppError("Email or password incorrect");
 
-    const token = sign({}, "5aaa1ce426e969f50fe0c5d4a81cecb3", {
+    const token = sign({}, process.env.APP_JWT_HASH, {
       subject: user.id,
       expiresIn: "1d",
     });
