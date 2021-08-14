@@ -6,8 +6,10 @@
   },
   "extends": [
     "airbnb-base",
+    "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
     "prettier",
+    "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -56,7 +58,7 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/^@shared/",
+          "/^@/",
           [
             "parent",
             "sibling",
