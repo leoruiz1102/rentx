@@ -1,7 +1,7 @@
+import { CreateSpecificationController } from "@modules/cars/useCases/createSpecification/CreateSpecificationController";
 import { Router } from "express";
+import { enshureAuthneticated } from "../middlewares/enshureAuthenticated";
 
-import { CreateSpecificationController } from "../modules/cars/useCases/createSpecification/CreateSpecificationController";
-import { enshureAuthneticated } from "../shared/middlewares/enshureAuthenticated";
 
 const specificationsRoutes = Router();
 
